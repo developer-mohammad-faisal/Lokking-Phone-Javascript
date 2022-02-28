@@ -1,0 +1,9 @@
+#card-container img{
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  margin-top: 20px;
+}
+#card-container{
+  text-align: center;
+}

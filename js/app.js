@@ -19,21 +19,23 @@
 const displayPhone = phones => {
     if (phones.length == 0) {
         const errorMsg = document.getElementById("error-msg2");
-        document.getElementById('error-msg1').innerText = ''
+        document.getElementById('error-msg1').innerText = '';
         errorMsg.innerText='try again later'
     }
  else{
   const cardContainer = document.getElementById('card-container');
   cardContainer.textContent = '';
-  phones.forEach(element => {
+  const phoneSlice = phones.slice(0,20);
+  phoneSlice.forEach(element => {
      const div = document.createElement('div');
      div.innerHTML = `
      <div class="col">
-     <div class="card h-100">
+     <div class="card  h-100">
        <img src="${element.image}" class="card-img-top" alt="...">
        <div class="card-body">
-       <h3 class="card-title">${element.brand}</h5>
-         <h5 class="card-title">${element.phone_name}</h5>
+       <h4 class="card-title">Name: ${element.phone_name}</h4>
+         <h5 class="card-title">Brand: ${element.brand}</h5>
+         <button onclick="showDetails('${element.slug}')" class="btn btn-outline-info" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" id="button-addon2">Explore</button>
        </div>
      </div>
    </div>
@@ -44,8 +46,72 @@ const displayPhone = phones => {
 }
 
 
+// display show details
+const showDetails = details => {
+  const url = `https://openapi.programming-hero.com/api/phone/${details}`
+  fetch(url)
+  .then(res => res.json())
+  .then(data => displayDetails(data.data))
+}
 
+const displayDetails = details => {
+  const detailsSHow = document.getElementById('details');
+  const tableShow = document.getElementById('table');
+  tableShow.innerHTML = `
 
+       <div class="text-center "> 
+            <img class="d-block mx-auto" src="${details.image}" alt="">
+       </div>
 
-  
-
+  <tr>
+    <th scope="row">Release Date</th>
+    <td>${details.releaseDate}</td>
+  </tr>
+  <tr>
+    <th scope="row">Main Features:</th>
+  </tr>
+  <tr>
+    <th scope="row">ChipSet</th>
+    <td colspan="2">${details.mainFeatures.chipSet}</td>
+  </tr>
+  <tr>
+    <th scope="row">Display</th>
+    <td colspan="2">${details.mainFeatures.displaySize}</td>
+  </tr>
+  <tr>
+    <th scope="row">Memory</th>
+    <td colspan="2">${details.mainFeatures.memory}</td>
+  </tr>
+  <tr>
+    <th scope="row">Sensor</th>
+    <td colspan="2">${details.mainFeatures.sensors}</td>
+  </tr>
+  <tr>
+    <th scope="row">Others:</th>
+  </tr>
+  <tr>
+    <th scope="row">Bluetooth</th>
+    <td colspan="2">${details.others.Bluetooth}</td>
+</tr>
+  <tr>
+    <th scope="row">GPS</th>
+    <td colspan="2">${details.others.GPS}</td>
+</tr>
+  <tr>
+    <th scope="row">NFC</th>
+    <td colspan="2">${details.others.NFC}</td>
+</tr>
+  <tr>
+    <th scope="row">Radio</th>
+    <td colspan="2">${details.others.Radio}</td>
+</tr>
+  <tr>
+    <th scope="row">USB</th>
+    <td colspan="2">${details.others.USB}</td>
+</tr>
+  <tr>
+    <th scope="row">WLAN</th>
+    <td colspan="2">${details.others.WLAN}</td>
+</tr>
+  `;
+}

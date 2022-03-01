@@ -1,10 +1,12 @@
+ const errorMsg = document.getElementById('error-msg1');
+
+//  Search var
  const loadPhone = () => {
+  errorMsg.innerText = ''
   const inputField = document.getElementById('input-field');
   const inputValue = inputField.value;
   if(inputField.value == ''){
-      const errorMsg = document.getElementById('error-msg1')
-      document.getElementById("error-msg2").innerText = '';
-      errorMsg.innerText = 'No Result Found!'
+    errorMsg.innerText = 'No Result Found'
   }
   else {
     // Clear Data
@@ -16,34 +18,35 @@
   }
 }
 
+// display Phone
 const displayPhone = phones => {
     if (phones.length == 0) {
-        const errorMsg = document.getElementById("error-msg2");
-        document.getElementById('error-msg1').innerText = '';
-        errorMsg.innerText='try again later'
     }
  else{
+   errorMsg.innerText = '';
   const cardContainer = document.getElementById('card-container');
   cardContainer.textContent = '';
+
+  // slice
   const phoneSlice = phones.slice(0,20);
   phoneSlice.forEach(element => {
      const div = document.createElement('div');
      div.innerHTML = `
      <div class="col">
      <div class="card  h-100">
-       <img src="${element.image}" class="card-img-top" alt="...">
-       <div class="card-body">
-       <h4 class="card-title">Name: ${element.phone_name}</h4>
+       <img src="${element.image}" class="card-img-top" alt="">
+      <div class="card-body">
+         <h4 class="card-title">Name: ${element.phone_name}</h4>
          <h5 class="card-title">Brand: ${element.brand}</h5>
-         <button onclick="showDetails('${element.slug}')" class="btn btn-outline-info" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" id="button-addon2">Explore</button>
+      <button onclick="showDetails('${element.slug}')" class="btn btn-outline-info" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" id="button-addon2">Explore</button>
        </div>
      </div>
    </div>
    `;
    cardContainer.appendChild(div);
   });
- }
-}
+ };
+};
 
 
 // display show details
@@ -54,25 +57,27 @@ const showDetails = details => {
   .then(data => displayDetails(data.data))
 }
 
+// show image
 const displayDetails = details => {
-  const detailsSHow = document.getElementById('details');
+  const phoneImage = document.getElementById('phone-img')
+  phoneImage.innerHTML = `   
+      <img src="${details.image}" alt="">
+      <h5>${details.name}</h5>
+  `;
+
+ // show details information
   const tableShow = document.getElementById('table');
-  tableShow.innerHTML = `
-
-       <div class="text-center "> 
-            <img class="d-block mx-auto" src="${details.image}" alt="">
-       </div>
-
+  tableShow.innerHTML = `      
   <tr>
     <th scope="row">Release Date</th>
-    <td>${details.releaseDate}</td>
+    <td>${details.releaseDate ?details.releaseDate :'No Release Date Found'}</td>
   </tr>
   <tr>
     <th scope="row">Main Features:</th>
   </tr>
   <tr>
     <th scope="row">ChipSet</th>
-    <td colspan="2">${details.mainFeatures.chipSet}</td>
+    <td colspan="2">${details.mainFeatures.chipSet ?details.mainFeatures.chipSet :'No ChipSet Found'}</td>
   </tr>
   <tr>
     <th scope="row">Display</th>

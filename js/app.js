@@ -2,6 +2,7 @@
 
 //  Search var
  const loadPhone = () => {
+  document.getElementById('card-container').textContent = ''; 
   errorMsg.innerText = ''
   const inputField = document.getElementById('input-field');
   const inputValue = inputField.value;
@@ -21,6 +22,7 @@
 // display Phone
 const displayPhone = phones => {
     if (phones.length == 0) {
+      errorMsg.innerText = 'Write the invalid keyword'
     }
  else{
    errorMsg.innerText = '';

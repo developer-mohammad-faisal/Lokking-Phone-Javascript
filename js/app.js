@@ -35,9 +35,9 @@ const displayPhone = phones => {
      <div class="col">
      <div class="card h-100">
        <img src="${element.image}" class="card-img-top" alt="">
-      <div class="card-body shadow">
-         <h4 class="card-title">Name: ${element.phone_name}</h4>
-         <h5 class="card-title">Brand: ${element.brand}</h5>
+      <div class="card-body shadow py-5">
+         <h4 class="card-title">${element.phone_name}</h4>
+         <h6 class="card-title">Brand: ${element.brand}</h6>
       <button onclick="showDetails('${element.slug}')" class="btn btn-outline-info" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" id="button-addon2">Explore</button>
        </div>
      </div>

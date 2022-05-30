@@ -1,39 +1,37 @@
- const errorMsg = document.getElementById('error-msg1');
+const errorMsg = document.getElementById("error-msg1");
 
 //  Search var
- const loadPhone = () => {
-  document.getElementById('card-container').textContent = ''; 
-  errorMsg.innerText = ''
-  const inputField = document.getElementById('input-field');
+const loadPhone = () => {
+  document.getElementById("card-container").textContent = "";
+  errorMsg.innerText = "";
+  const inputField = document.getElementById("input-field");
   const inputValue = inputField.value;
-  if(inputField.value == ''){
-    errorMsg.innerText = 'No Result Found'
-  }
-  else {
+  if (inputField.value == "") {
+    errorMsg.innerText = "Not Result Found";
+  } else {
     // Clear Data
     inputField.value = "";
-    const url = `https://openapi.programming-hero.com/api/phones?search=${inputValue}`
+    const url = `https://openapi.programming-hero.com/api/phones?search=${inputValue}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => displayPhone(data.data));
   }
-}
+};
 
 // display Phone
-const displayPhone = phones => {
-    if (phones.length == 0) {
-      errorMsg.innerText = 'Write the invalid keyword'
-    }
- else{
-   errorMsg.innerText = '';
-  const cardContainer = document.getElementById('card-container');
-  cardContainer.textContent = '';
+const displayPhone = (phones) => {
+  if (phones.length == 0) {
+    errorMsg.innerText = "Write the valid keyword";
+  } else {
+    errorMsg.innerText = "";
+    const cardContainer = document.getElementById("card-container");
+    cardContainer.textContent = "";
 
-  // slice
-  const phoneSlice = phones.slice(0,20);
-  phoneSlice.forEach(element => {
-     const div = document.createElement('div');
-     div.innerHTML = `
+    // slice
+    const phoneSlice = phones.slice(0, 20);
+    phoneSlice.forEach((element) => {
+      const div = document.createElement("div");
+      div.innerHTML = `
      <div class="col">
      <div class="card h-100">
        <img src="${element.image}" class="card-img-top" alt="">
@@ -45,41 +43,46 @@ const displayPhone = phones => {
      </div>
    </div>
    `;
-   cardContainer.appendChild(div);
-  });
- };
+      cardContainer.appendChild(div);
+    });
+  }
 };
 
-
 // display show details
-const showDetails = details => {
-  const url = `https://openapi.programming-hero.com/api/phone/${details}`
+const showDetails = (details) => {
+  const url = `https://openapi.programming-hero.com/api/phone/${details}`;
   fetch(url)
-  .then(res => res.json())
-  .then(data => displayDetails(data.data))
-}
+    .then((res) => res.json())
+    .then((data) => displayDetails(data.data));
+};
 
 // show image
-const displayDetails = details => {
-  const phoneImage = document.getElementById('phone-img')
+const displayDetails = (details) => {
+  const phoneImage = document.getElementById("phone-img");
   phoneImage.innerHTML = `   
       <img src="${details.image}" alt="">
       <h5>${details.name}</h5>
   `;
 
- // show details information
-  const tableShow = document.getElementById('table');
+  // show details information
+  const tableShow = document.getElementById("table");
   tableShow.innerHTML = `      
   <tr>
     <th scope="row">Release Date</th>
-    <td>${details.releaseDate ?details.releaseDate :'No Release Date Found'}</td>
+    <td>${
+      details.releaseDate ? details.releaseDate : "No Release Date Found"
+    }</td>
   </tr>
   <tr>
     <th scope="row">Main Features:</th>
   </tr>
-  <tr>
+  <tr> 
     <th scope="row">ChipSet</th>
-    <td colspan="2">${details.mainFeatures.chipSet ?details.mainFeatures.chipSet :'No ChipSet Found'}</td>
+    <td colspan="2">${
+      details.mainFeatures.chipSet
+        ? details.mainFeatures.chipSet
+        : "No ChipSet Found"
+    }</td>
   </tr>
   <tr>
     <th scope="row">Display</th>
@@ -121,4 +124,4 @@ const displayDetails = details => {
     <td colspan="2">${details.others.WLAN}</td>
 </tr>
   `;
-}
+};
